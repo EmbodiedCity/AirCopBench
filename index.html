@@ -1,10 +1,2229 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Hello GitHub Pages</title>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirCopBench Supplementary Material</title>
+    <link rel="stylesheet" href="styles.css">
+
+ </head>
 <body>
-    <h1>你好，这是我的 GitHub Pages！</h1>
+    <div class="container">
+        <h1>Supplementary Material of AirCopBench:<br>Benchmarking MLLMs on Embodied</h1>
+        <h2>Aerial Collaborative Perception with<br>Challenging Perception Degradation</h2>
+        <div class="buttons">
+            <a href="#" class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M14.5 2.25l1.25 1.25L21 8.25V20a2 2 0 0 1 -2 2H5a2 2 0 0 1 -2-2V4a2 2 0 0 1 2-2h7.75z"/>
+                    <path d="M14 2V8h6"/>
+                    <path d="M8 11h8"/>
+                    <path d="M10 15H14"/>
+                </svg>
+                arXiv
+            </a>
+            <a href="#" class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M14.5 2.25l1.25 1.25L21 8.25V20a2 2 0 0 1 -2 2H5a2 2 0 0 1 -2-2V4a2 2 0 0 1 2-2h7.75z"/>
+                    <path d="M14 2V8h6"/>
+                    <path d="M8 11h8"/>
+                    <path d="M10 15H14"/>
+                </svg>
+                PDF
+            </a>
+            <a href="https://github.com/zhajirong/AirCopBench.git" class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                </svg>
+                Code
+            </a>
+            <a href="#" class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M3 3h18v18H3zM9 17V7l8 5-8 5z"/>
+                </svg>
+                Datasets
+            </a>
+        </div>
+        <p class="intro-paragraph">The benchmark is designed to evaluate whether vision-language models (VLMs) can process multi-UAV collaborative visual data for question answering, covering perception, reasoning, and decision-making in complex scenarios.</p>
+        
+        <div class="modules-container">
+        <div class="dataset-examples-group">
+            <p>To better illustrate the proposed dataset, we present VQA examples along with corresponding multi-view images captured by multiple UAVs in the real world (Liu et al. 2023), the EmbodiedCity simulator (Gao et al. 2024), the Coperception-UAV dataset (Hu et al. 2022), and the AeroCollab3D dataset (Tian et al. 2024), covering all 14 task types across 4 dimensions. The dataset examples from the 4 data sources are shown below respectively. </p>
+            <a href="https://drive.google.com/drive/folders/1MeCM2MA5A-1XsIgvSZZacCWk-sistgp?usp=sharing" class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M3 3h18v18H3zM9 17V7l8 5-8 5z"/>
+                </svg>
+                View Dataset
+            </a>
+            
+            <div class="collapsible-section">
+            <button class="collapsible-btn" onclick="toggleCollapse()">
+                <span>Examples of real-world images captured by real drones and their corresponding VQA pairs</span>
+                <span class="arrow">▼</span>
+            </button>
+            <div class="collapsible-content" id="examples-content">
+                <div class="example-grid">
+                    <!-- Example 1 -->
+                    <div class="example-pair">
+                        <div class="image-pair">
+                            <div class="image-container">
+                                <span class="image-label">1</span>
+                                <img src="example/1.png" alt="UAV1 Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">2</span>
+                                <img src="example/2.png" alt="UAV2 Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Scene Understanding - Scene Comparison</p>
+                            <p><strong>Question:</strong> What is a notable difference in the types of objects visible near the road in UAV1 compared to UAV2?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: UAV1 shows more trees near the road, while UAV2 shows more buildings.</li>
+                                <li>B: UAV1 shows a bus stop structure, which is absent in UAV2.</li>
+                                <li>C: UAV2 shows a red ground parking lot with numerous cars, which is not visible in UAV1.</li>
+                                <li>D: UAV1 includes a pedestrian crossing sign, missing in UAV2.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> C</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 2 -->
+                    <div class="example-pair">
+                        <div class="image-pair">
+                            <div class="image-container">
+                                <span class="image-label">3</span>
+                                <img src="example/3.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">4</span>
+                                <img src="example/4.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Object Understanding - Object Grounding</p>
+                            <p><strong>Question:</strong> Where is the large green landscaped area located relative to the multi-lane road?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: The landscaped area is adjacent to the right side of the road.</li>
+                                <li>B: The landscaped area is directly under the road.</li>
+                                <li>C: The landscaped area is on the left side, separated by buildings.</li>
+                                <li>D: The landscaped area is in the middle of the road.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> C</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 3 -->
+                    <div class="example-pair">
+                        <div class="image-pair">
+                            <div class="image-container">
+                                <span class="image-label">5</span>
+                                <img src="example/5.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">6</span>
+                                <img src="example/6.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Object Understanding - Object Recognition</p>
+                            <p><strong>Question:</strong> Which vehicle is positioned directly behind the yellow bus across the intersection?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: The red car near the left edge of the image.</li>
+                                <li>B: The white car approaching the intersection from the bottom.</li>
+                                <li>C: The black car in the middle lane.</li>
+                                <li>D: The teal car on the far right.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> B</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 4 -->
+                    <div class="example-pair">
+                        <div class="image-pair">
+                            <div class="image-container">
+                                <span class="image-label">7</span>
+                                <img src="example/7.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">8</span>
+                                <img src="example/8.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Object Understanding - Object Counting</p>
+                            <p><strong>Question:</strong> Based on the image analysis, how many targets (vehicles, pedestrians, bicycles) can be observed in UAV2's perspective?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: 32</li>
+                                <li>B: 35</li>
+                                <li>C: 31</li>
+                                <li>D: 34</li>
+                            </ul>
+                            <p><strong>Answer:</strong> D</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 5 -->
+                    <div class="example-pair">
+                        <div class="image-pair">
+                            <div class="image-container">
+                                <span class="image-label">9</span>
+                                <img src="example/9.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">10</span>
+                                <img src="example/10.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Perception Assessment - Causal Assessment</p>
+                            <p><strong>Question:</strong> What main factor might affect object detection in the scene of UAV2?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: High noise in the image.</li>
+                                <li>B: Occlusion by large vehicles.</li>
+                                <li>C: Low resolution due to distance.</li>
+                                <li>D: Overexposure from bright lighting.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> A</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 6 -->
+                    <div class="example-pair">
+                        <div class="image-pair">
+                            <div class="image-container">
+                                <span class="image-label">11</span>
+                                <img src="example/11.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">12</span>
+                                <img src="example/12.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Perception Assessment - Usability Assessment</p>
+                            <p><strong>Question:</strong> Is the image captured by UAV1 usable for target perception tasks?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: Yes, barely usable.</li>
+                                <li>B: Yes, highly usable.</li>
+                                <li>C: No, not usable.</li>
+                                <li>D: Yes, partially usable.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> B</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 7 -->
+                    <div class="example-pair">
+                        <div class="image-pair">
+                            <div class="image-container">
+                                <span class="image-label">13</span>
+                                <img src="example/13.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">14</span>
+                                <img src="example/14.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Perception Assessment - Quality Assessment</p>
+                            <p><strong>Question:</strong> What is the perception quality assessment score (1-5) for the image captured by UAV1?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: 5</li>
+                                <li>B: 2</li>
+                                <li>C: 1</li>
+                                <li>D: 3</li>
+                            </ul>
+                            <p><strong>Answer:</strong> D</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 8 -->
+                    <div class="example-pair">
+                        <div class="image-pair">
+                            <div class="image-container">
+                                <span class="image-label">15</span>
+                                <img src="example/15.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">16</span>
+                                <img src="example/16.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Collaborative Decision - When to Collaborate</p>
+                            <p><strong>Question:</strong> Should UAV1 collaborate with another UAV to address need for collaboration due to incomplete information?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: Yes, due to partial occlusion of key objects.</li>
+                                <li>B: No, the scene is fully visible.</li>
+                                <li>C: Yes, due to poor visibility of the objects.</li>
+                                <li>D: No, all objects are clearly captured.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> A</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 9 -->
+                    <div class="example-pair">
+                        <div class="image-pair">
+                            <div class="image-container">
+                                <span class="image-label">17</span>
+                                <img src="example/17.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">18</span>
+                                <img src="example/18.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Scene Understanding - Scene Description</p>
+                            <p><strong>Question:</strong> How do the vehicles interact with the pedestrian crossing in this nighttime scene?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: Vehicles are stopped before the crossing, indicating respect for pedestrian safety.</li>
+                                <li>B: Vehicles are actively passing over the crossing, suggesting no pedestrians are present.</li>
+                                <li>C: Vehicles are parked directly on the crossing, obstructing any pedestrian movement.</li>
+                                <li>D: Vehicles are turning around the crossing, avoiding direct interaction.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> B</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 10 -->
+                    <div class="example-pair">
+                        <div class="image-pair">
+                            <div class="image-container">
+                                <span class="image-label">19</span>
+                                <img src="example/19.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">20</span>
+                                <img src="example/20.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Object Understanding - Object Matching</p>
+                            <p><strong>Question:</strong> Which object in UAV2 corresponds to the pedestrian crossing the road near the center of UAV1's view?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: The pedestrian now walking along the sidewalk in UAV2.</li>
+                                <li>B: The cyclist riding near the road edge in UAV2.</li>
+                                <li>C: The pedestrian standing near a parked car in UAV2.</li>
+                                <li>D: The pedestrian crossing the road near a traffic light in UAV2.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> A</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 11 -->
+                    <div class="example-pair">
+                        <div class="image-pair">
+                            <div class="image-container">
+                                <span class="image-label">21</span>
+                                <img src="example/21.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">22</span>
+                                <img src="example/22.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Collaborative Decision - Why to Collaborate</p>
+                            <p><strong>Question:</strong> Why should UAV1 collaborate with another UAV?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: To enhance the visibility of distant or small targets that are not visible in its current perspective.</li>
+                                <li>B: To capture a wider geographical area for broader context.</li>
+                                <li>C: To adjust for varying weather conditions affecting image clarity.</li>
+                                <li>D: To provide real-time data for immediate decision-making.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> A</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Second Collapsible Examples Section -->
+        <div class="collapsible-section">
+            <button class="collapsible-btn" onclick="toggleCollapse2()">
+                <span>Examples of simulated images collected from Embodied City and their corresponding VQA pairs</span>
+                <span class="arrow">▼</span>
+            </button>
+            <div class="collapsible-content" id="examples-content2">
+                <div class="example-grid">
+                    <!-- Example 1 -->
+                    <div class="example-pair">
+                        <div class="image-triplet">
+                            <div class="image-container">
+                                <span class="image-label">23</span>
+                                <img src="example/23.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">24</span>
+                                <img src="example/24.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">25</span>
+                                <img src="example/25.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Scene Understanding - Scene Description</p>
+                            <p><strong>Question:</strong> What is the most likely primary monitoring priority for the UAV in this scene?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: Tracking the movement of a drone around the structure.</li>
+                                <li>B: Monitoring the traffic flow on the adjacent road.</li>
+                                <li>C: Observing the pedestrian activity on the sidewalks.</li>
+                                <li>D: Identifying bicycles traveling near the intersection.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> A</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 2 -->
+                    <div class="example-pair">
+                        <div class="image-triplet">
+                            <div class="image-container">
+                                <span class="image-label">26</span>
+                                <img src="example/26.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">27</span>
+                                <img src="example/27.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">28</span>
+                                <img src="example/28.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Perception Assessment - Causal Assessment</p>
+                            <p><strong>Question:</strong> What is the primary cause affecting the detection of vehicles, pedestrians, and bicycles in the image of UAV1?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: Overexposure due to sunlight causing glare.</li>
+                                <li>B: Color blending between targets and surroundings.</li>
+                                <li>C: Occlusion by dense foliage obstructing visibility.</li>
+                                <li>D: Motion blur caused by moving targets.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> C</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 3 -->
+                    <div class="example-pair">
+                        <div class="image-triplet">
+                            <div class="image-container">
+                                <span class="image-label">29</span>
+                                <img src="example/29.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">30</span>
+                                <img src="example/30.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">31</span>
+                                <img src="example/31.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Collaborative Decision - Why to Collaborate</p>
+                            <p><strong>Question:</strong> What is the main reason UAV2 should collaborate with other UAVs in this scenario?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: To obtain a larger and clearer view of the target that appears too small or distant.</li>
+                                <li>B: To compensate for shadowing effects in the image caused by structural elements.</li>
+                                <li>C: To reduce time required for multi-perspective object labeling.</li>
+                                <li>D: To synchronize flight paths for uniform coverage of the area.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> A</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 4 -->
+                    <div class="example-pair">
+                        <div class="image-triplet">
+                            <div class="image-container">
+                                <span class="image-label">32</span>
+                                <img src="example/32.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">33</span>
+                                <img src="example/33.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">34</span>
+                                <img src="example/34.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Object Understanding - Object Matching</p>
+                            <p><strong>Question:</strong> The hovering drone visible near the center of the intersection in UAV3's perspective corresponds to which target in another UAV's aerial view?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: The drone partially obscured by a tree, hovering along the sidewalk in UAV2.</li>
+                                <li>B: The drone seen flying above the treetops, captured clearly in UAV1's perspective.</li>
+                                <li>C: The drone stationary and seen near a traffic light on the corner of the street in UAV2.</li>
+                                <li>D: The drone flying low above an empty crosswalk, visible near a parked vehicle in UAV1.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> A</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 5 -->
+                    <div class="example-pair">
+                        <div class="image-triplet">
+                            <div class="image-container">
+                                <span class="image-label">35</span>
+                                <img src="example/35.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">36</span>
+                                <img src="example/36.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">37</span>
+                                <img src="example/37.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Object Understanding - Object Counting</p>
+                            <p><strong>Question:</strong> Understanding - Object Counting From the UAV1's aerial perspective, how many targets (drones, vehicles, pedestrians) can be detected in UAV1's field of view?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: 2</li>
+                                <li>B: 0</li>
+                                <li>C: 1</li>
+                                <li>D: 3</li>
+                            </ul>
+                            <p><strong>Answer:</strong> D</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 6 -->
+                    <div class="example-pair">
+                        <div class="image-triplet">
+                            <div class="image-container">
+                                <span class="image-label">38</span>
+                                <img src="example/38.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">39</span>
+                                <img src="example/39.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">40</span>
+                                <img src="example/40.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Collaborative Decision - Who to Collaborate</p>
+                            <p><strong>Question:</strong> Which UAV should UAV2 collaborate with for collaboration partner for complementary perspective in multi-UAV setup?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: UAV1</li>
+                                <li>B: None (no suitable collaboration partner).</li>
+                                <li>C: UAV3</li>
+                                <li>D: A ground-based sensor.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> A</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 7 -->
+                    <div class="example-pair">
+                        <div class="image-triplet">
+                            <div class="image-container">
+                                <span class="image-label">41</span>
+                                <img src="example/41.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">42</span>
+                                <img src="example/42.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">43</span>
+                                <img src="example/43.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Scene Understanding - Scene Comparison</p>
+                            <p><strong>Question:</strong> How does the visibility of target drones differ across the three UAV perspectives?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: UAV1 captures one visible drone but misses the others due to occlusion from buildings.</li>
+                                <li>B: UAV2 provides visibility of two drones with limited occlusion from structural curves.</li>
+                                <li>C: UAV3 captures the highest number of drones visible due to its extended angle of view.</li>
+                                <li>D: All three UAVs detect an equal number of drones in the scene.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> B</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 8 -->
+                    <div class="example-pair">
+                        <div class="image-triplet">
+                            <div class="image-container">
+                                <span class="image-label">44</span>
+                                <img src="example/44.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">45</span>
+                                <img src="example/45.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">46</span>
+                                <img src="example/46.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Scene Understanding - Scene Description</p>
+                            <p><strong>Question:</strong> Based on UAV2's field of view, what is the primary monitoring priority of target movement patterns?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: Tracking the movement of the drones hovering above the buildings.</li>
+                                <li>B: Analyzing pedestrian flow along the sidewalks and open areas.</li>
+                                <li>C: Monitoring vehicles traveling along the central road for traffic violations.</li>
+                                <li>D: Observing bicycle movements through designated bike lanes.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> A</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 9 -->
+                    <div class="example-pair">
+                        <div class="image-triplet">
+                            <div class="image-container">
+                                <span class="image-label">47</span>
+                                <img src="example/47.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">48</span>
+                                <img src="example/48.png" alt="UAV Image" class="drone-image">
+                            </div>
+                            <div class="image-container">
+                                <span class="image-label">49</span>
+                                <img src="example/49.png" alt="UAV Image" class="drone-image">
+                            </div>
+                        </div>
+                        <div class="qa-content">
+                            <p><strong>Question Type:</strong> Collaborative Decision - What to Collaborate</p>
+                            <p><strong>Question:</strong> What specific object information should UAV2 share with other UAVs about the drone in the marked region?</p>
+                            <p><strong>Options:</strong></p>
+                            <ul>
+                                <li>A: Drone partially obscured by tree leaves in the center of the image that needs position clarification.</li>
+                                <li>B: Drone moving near the road crossing in the upper center area that requires trajectory estimation.</li>
+                                <li>C: Drone blending with shadows near the bottom edge that requires contrast adjustment.</li>
+                                <li>D: Drone hovering above the road near the pedestrian area on the left side that requires height confirmation.</li>
+                            </ul>
+                            <p><strong>Answer:</strong> A</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+    <!-- Third Collapsible Module -->
+    <div class="collapsible-section">
+        <button class="collapsible-btn" onclick="toggleCollapse3()">
+            <span>Examples of simulated images collected from Coperception-UAV and their corresponding VQA pairs</span>
+            <span class="arrow">▼</span>
+        </button>
+        <div class="collapsible-content" id="examples-content3">
+            <div class="example-grid">
+                <!-- Group 1: Images 50-54 -->
+                <div class="example-pair">
+                <div class="image-group">
+                    <div class="image-container">
+                        <span class="image-label">50</span>
+                        <img src="example/50.png" alt="Image 50" class="drone-image">
+                    </div>
+                    <div class="image-container">
+                        <span class="image-label">51</span>
+                        <img src="example/51.png" alt="Image 51" class="drone-image">
+                    </div>
+                    <div class="image-container">
+                        <span class="image-label">52</span>
+                        <img src="example/52.png" alt="Image 52" class="drone-image">
+                    </div>
+                    <div class="image-container">
+                        <span class="image-label">53</span>
+                        <img src="example/53.png" alt="Image 53" class="drone-image">
+                    </div>
+                    <div class="image-container">
+                        <span class="image-label">54</span>
+                        <img src="example/54.png" alt="Image 54" class="drone-image">
+                    </div>
+                </div>
+                <div class="qa-content">
+                    <div class="qa-item">
+                        <p><strong>Question Type:</strong> Scene Understanding - Scene Comparison</p>
+                        <p><strong>Question:</strong> Which perspective highlights the presence of buildings near the water, and how do they compare to the other images?</p>
+                        <p><strong>Options:</strong></p>
+                        <ul>
+                            <li>A: Only UAV5 shows buildings near the water.</li>
+                            <li>B: UAV3 and UAV5 both show buildings, but UAV5 includes water.</li>
+                            <li>C: UAV1 and UAV5 show buildings near the road and water.</li>
+                            <li>D: None of the UAV perspectives include buildings near the water.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> A</p>
+                    </div>
+                    <hr class="qa-divider">
+                    <div class="qa-item">
+                        <p><strong>Question Type:</strong> Perception Assessment - Causal Assessment</p>
+                        <p><strong>Question:</strong> What is the primary cause of object detection challenges in this UAV3 image?</p>
+                        <p><strong>Options:</strong></p>
+                        <ul>
+                            <li>A: High image noise from sensor failure.</li>
+                            <li>B: Occlusion by dense tree placement.</li>
+                            <li>C: Motion blur due to UAV movement.</li>
+                            <li>D: Overexposure due to excessive sunlight.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B</p>
+                    </div>
+                    <hr class="qa-divider">
+                    <div class="qa-item">
+                        <p><strong>Question Type:</strong> Object Understanding - Object Grounding</p>
+                        <p><strong>Question:</strong> What is the position of the red car relative to the large cluster of trees in the middle of the image?</p>
+                        <p><strong>Options:</strong></p>
+                        <ul>
+                            <li>A: The red car is directly behind the cluster of trees on the curved road.</li>
+                            <li>B: The red car is on the curved road to the right of the cluster of trees.</li>
+                            <li>C: The red car is located at the far edge of the open grassy area.</li>
+                            <li>D: The red car is positioned within the cluster of trees near the largest rock.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B</p>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Group 2: Images 55-59 -->
+                <div class="example-pair">
+                <div class="image-group">
+                    <div class="image-container">
+                        <span class="image-label">55</span>
+                        <img src="example/55.png" alt="Image 55" class="drone-image">
+                    </div>
+                    <div class="image-container">
+                        <span class="image-label">56</span>
+                        <img src="example/56.png" alt="Image 56" class="drone-image">
+                    </div>
+                    <div class="image-container">
+                        <span class="image-label">57</span>
+                        <img src="example/57.png" alt="Image 57" class="drone-image">
+                    </div>
+                    <div class="image-container">
+                        <span class="image-label">58</span>
+                        <img src="example/58.png" alt="Image 58" class="drone-image">
+                    </div>
+                    <div class="image-container">
+                        <span class="image-label">59</span>
+                        <img src="example/59.png" alt="Image 59" class="drone-image">
+                    </div>
+                </div>
+                <div class="qa-content">
+                    <div class="qa-item">
+                        <p><strong>Question Type:</strong> Scene Understanding - Observing Posture</p>
+                        <p><strong>Question:</strong> Which UAV perspective better highlights the spatial relationship between the circular building and the main road?</p>
+                        <p><strong>Options:</strong></p>
+                        <ul>
+                            <li>A: UAV1 offers a clearer view due to its higher angle and proximity to the circular building.</li>
+                            <li>B: UAV2 provides a clearer view by focusing on the main road and surrounding structures.</li>
+                            <li>C: Both UAVs equally highlight the spatial relationship.</li>
+                            <li>D: Neither UAV perspective clearly shows the relationship between the building and the road.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> A</p>
+                    </div>
+                    <hr class="qa-divider">
+                    <div class="qa-item">
+                        <p><strong>Question Type:</strong> Collaborative Decision - Who to Collaborate</p>
+                        <p><strong>Question:</strong> Which UAV should UAV2 collaborate with for collaboration partner for complementary perspective in multi-UAV setup?</p>
+                        <p><strong>Options:</strong></p>
+                        <ul>
+                            <li>A: UAV1.</li>
+                            <li>B: UAV3.</li>
+                            <li>C: UAV4.</li>
+                            <li>D: UAV5.</li>
+                            <li>E: None (no need for collaboration).</li>
+                        </ul>
+                        <p><strong>Answer:</strong> D</p>
+                    </div>
+                    <hr class="qa-divider">
+                    <div class="qa-item">
+                        <p><strong>Question Type:</strong> Collaborative Decision - What to Collaborate</p>
+                        <p><strong>Question:</strong> What specific object information should UAV3 share with other UAVs to improve multi-view perception of the scene?</p>
+                        <p><strong>Options:</strong></p>
+                        <ul>
+                            <li>A: Precise positions and movements of the blue car on the main road visible in UAV3's view.</li>
+                            <li>B: Architectural details of the silo structures for better object recognition in other UAVs.</li>
+                            <li>C: Tree locations along the road to align environmental features across all UAV views.</li>
+                            <li>D: Details of vehicle congestion near the circular building visible in UAV2's angle.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> A</p>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Group 3: Images 60-64 -->
+                <div class="example-pair">
+                <div class="image-group">
+                    <div class="image-container">
+                        <span class="image-label">60</span>
+                        <img src="example/60.png" alt="Image 60" class="drone-image">
+                    </div>
+                    <div class="image-container">
+                        <span class="image-label">61</span>
+                        <img src="example/61.png" alt="Image 61" class="drone-image">
+                    </div>
+                    <div class="image-container">
+                        <span class="image-label">62</span>
+                        <img src="example/62.png" alt="Image 62" class="drone-image">
+                    </div>
+                    <div class="image-container">
+                        <span class="image-label">63</span>
+                        <img src="example/63.png" alt="Image 63" class="drone-image">
+                    </div>
+                    <div class="image-container">
+                        <span class="image-label">64</span>
+                        <img src="example/64.png" alt="Image 64" class="drone-image">
+                    </div>
+                </div>
+                <div class="qa-content">
+                    <div class="qa-item">
+                        <p><strong>Question Type:</strong> Object Understanding - Object Counting</p>
+                        <p><strong>Question:</strong> Based on the image analysis, how many targets (vehicles, pedestrians, bicycles) can be observed in UAV2's perspective?</p>
+                        <p><strong>Options:</strong></p>
+                        <ul>
+                            <li>A: 5.</li>
+                            <li>B: 11.</li>
+                            <li>C: 9.</li>
+                            <li>D: 6.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> C</p>
+                    </div>
+                    <hr class="qa-divider">
+                    <div class="qa-item">
+                        <p><strong>Question Type:</strong> Perception Assessment - Causal Assessment</p>
+                        <p><strong>Question:</strong> What is the primary factor affecting perception quality in UAV5's view?</p>
+                        <p><strong>Options:</strong></p>
+                        <ul>
+                            <li>A: Overexposure due to direct sunlight.</li>
+                            <li>B: Partial occlusion by foreground tree branches.</li>
+                            <li>C: Blur caused by UAV motion.</li>
+                            <li>D: Lower resolution due to sensor limitations.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B</p>
+                    </div>
+                    <hr class="qa-divider">
+                    <div class="qa-item">
+                        <p><strong>Question Type:</strong> Collaborative Decision - Why to Collaborate</p>
+                        <p><strong>Question:</strong> What is the main reason UAV2 should collaborate with other UAVs in this scenario?</p>
+                        <p><strong>Options:</strong></p>
+                        <ul>
+                            <li>A: To synchronize overlapping data from identical regions.</li>
+                            <li>B: To improve visibility of shadowed objects in UAV2's perspective.</li>
+                            <li>C: To generate a shared panoramic image across multiple perspectives.</li>
+                            <li>D: To compensate for the small and distant target size visible in UAV2.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> D</p>
+                    </div>
+                    <hr class="qa-divider">
+                    <div class="qa-item">
+                        <p><strong>Question Type:</strong> Collaborative Decision - When to Collaborate</p>
+                        <p><strong>Question:</strong> Should UAV4 collaborate with other UAVs to address need for collaboration due to environmental factors across UAVs?</p>
+                        <p><strong>Options:</strong></p>
+                        <ul>
+                            <li>A: Yes, due to low image resolution.</li>
+                            <li>B: Yes, due to shadow.</li>
+                            <li>C: No, the environment is clear.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> C</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Fourth Collapsible Module -->
+    <div class="collapsible-section">
+        <button class="collapsible-btn" onclick="toggleCollapse4()">
+            <span>Examples of simulated images collected from AeroCollab3D and their corresponding VQA pairs</span>
+            <span class="arrow">▼</span>
+        </button>
+        <div class="collapsible-content" id="examples-content4" style="display: none;">
+            <div class="example-grid">
+                <!-- Group 1: Images 65-70 -->
+                <div class="example-pair">
+                    <div class="image-group">
+                        <div class="image-container">
+                            <span class="image-label">65</span>
+                            <img src="example/65.png" alt="Drone Image 65" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">66</span>
+                            <img src="example/66.png" alt="Drone Image 66" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">67</span>
+                            <img src="example/67.png" alt="Drone Image 67" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">68</span>
+                            <img src="example/68.png" alt="Drone Image 68" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">69</span>
+                            <img src="example/69.png" alt="Drone Image 69" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">70</span>
+                            <img src="example/70.png" alt="Drone Image 70" class="drone-image">
+                        </div>
+                    </div>
+                    <div class="qa-content">
+                        <h3>Scene Understanding - Scene Comparison</h3>
+                        <p><strong>Question:</strong> How does the number of vehicles visible on the road differ between the UAV1 perspective and the subsequent UAV perspectives?</p>
+                        <ul>
+                            <li>A: UAV1 shows the most vehicles compared to all other perspectives.</li>
+                            <li>B: UAV3 shows more vehicles than UAV1 due to additional objects entering the scene.</li>
+                            <li>C: All UAV perspectives show an identical number of vehicles.</li>
+                            <li>D: UAV2 shows fewer vehicles than UAV1 and UAV3 due to limited angle.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B</p>
+                        
+                        <hr class="qa-divider">
+                        
+                        <h3>Perception Assessment - Causal Assessment</h3>
+                        <p><strong>Question:</strong> What is the primary cause of reduced visibility in UAV6's image?</p>
+                        <ul>
+                            <li>A: Occlusion by nearby obstacles.</li>
+                            <li>B: Low contrast lighting.</li>
+                            <li>C: Motion blur from rapid UAV movement.</li>
+                            <li>D: Height of the UAV being too close to the ground.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> D</p>
+                        
+                        <hr class="qa-divider">
+                        
+                        <h3>Object Understanding - Object Grounding</h3>
+                        <p><strong>Question:</strong> What is the relative position of the white car in the scene of UAV3 compared to the bus?</p>
+                        <ul>
+                            <li>A: The white car is driving in the adjacent lane directly opposite the bus.</li>
+                            <li>B: The white car is positioned behind the bus on the same side of the road.</li>
+                            <li>C: The white car is ahead of the bus in the adjacent lane.</li>
+                            <li>D: The white car is beside the bus in the same lane.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> A</p>
+                    </div>
+                </div>
+
+                <!-- Group 2: Images 71-76 -->
+                <div class="example-pair">
+                    <div class="image-group">
+                        <div class="image-container">
+                            <span class="image-label">71</span>
+                            <img src="example/71.png" alt="Drone Image 71" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">72</span>
+                            <img src="example/72.png" alt="Drone Image 72" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">73</span>
+                            <img src="example/73.png" alt="Drone Image 73" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">74</span>
+                            <img src="example/74.png" alt="Drone Image 74" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">75</span>
+                            <img src="example/75.png" alt="Drone Image 75" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">76</span>
+                            <img src="example/76.png" alt="Drone Image 76" class="drone-image">
+                        </div>
+                    </div>
+                    <div class="qa-content">
+                        <h3>Perception Assessment - Causal Assessment</h3>
+                        <p><strong>Question:</strong> What is the primary factor affecting object detection in the scene of UAV2?</p>
+                        <ul>
+                            <li>A: Insufficient lighting conditions.</li>
+                            <li>B: Blur caused by camera motion.</li>
+                            <li>C: Obstructing elements like buildings and trees.</li>
+                            <li>D: Low resolution of the image.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> C</p>
+                        
+                        <hr class="qa-divider">
+                        
+                        <h3>Object Understanding - Object Recognition</h3>
+                        <p><strong>Question:</strong> What type of vehicle is visible closest to the yellow line on the road in the view of UAV1?</p>
+                        <ul>
+                            <li>A: A blue car.</li>
+                            <li>B: A red truck.</li>
+                            <li>C: A gray SUV.</li>
+                            <li>D: A white van.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> C</p>
+                        
+                        <hr class="qa-divider">
+                        
+                        <h3>Collaborative Decision - Who to Collaborate</h3>
+                        <p><strong>Question:</strong> Which UAV should UAV2 collaborate with for collaboration partner for specific object data across UAVs?</p>
+                        <ul>
+                            <li>A: UAV1, UAV3.</li>
+                            <li>B: None (no need for collaboration).</li>
+                            <li>C: UAV4.</li>
+                            <li>D: UAV3.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> A</p>
+                        
+                        <hr class="qa-divider">
+                        
+                        <h3>Collaborative Decision - When to Collaborate</h3>
+                        <p><strong>Question:</strong> Should UAV4 collaborate with other UAVs to address need for collaboration due to environmental factors across UAVs?</p>
+                        <ul>
+                            <li>A: Yes, due to long distance or small target.</li>
+                            <li>B: No, lighting is adequate across all UAVs.</li>
+                            <li>C: Yes, due to low image resolution in some views.</li>
+                            <li>D: No, the environment is clear for all UAVs.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> A</p>
+                    </div>
+                </div>
+
+                <!-- Group 3: Images 77-82 -->
+                <div class="example-pair">
+                    <div class="image-group">
+                        <div class="image-container">
+                            <span class="image-label">77</span>
+                            <img src="example/77.png" alt="Drone Image 77" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">78</span>
+                            <img src="example/78.png" alt="Drone Image 78" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">79</span>
+                            <img src="example/79.png" alt="Drone Image 79" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">80</span>
+                            <img src="example/80.png" alt="Drone Image 80" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">81</span>
+                            <img src="example/81.png" alt="Drone Image 81" class="drone-image">
+                        </div>
+                        <div class="image-container">
+                            <span class="image-label">82</span>
+                            <img src="example/82.png" alt="Drone Image 82" class="drone-image">
+                        </div>
+                    </div>
+                    <div class="qa-content">
+                        <h3>Scene Understanding - Scene Description</h3>
+                        <p><strong>Question:</strong> What type of interaction is occurring between the vehicle and the road in this scene of UAV1?</p>
+                        <ul>
+                            <li>A: The vehicle is parked at the curb, indicating a pause in movement.</li>
+                            <li>B: The vehicle is driving aggressively through the intersection.</li>
+                            <li>C: The vehicle is stopped at a red light, yielding to crossing pedestrians.</li>
+                            <li>D: The vehicle is making a left turn onto the main road.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> A</p>
+                        
+                        <hr class="qa-divider">
+                        
+                        <h3>Object Understanding - Object Grounding</h3>
+                        <p><strong>Question:</strong> What is the position of the red vehicle relative to the large beige building visible in the scene of UAV3?</p>
+                        <ul>
+                            <li>A: The red vehicle is directly in front of the large beige building.</li>
+                            <li>B: The red vehicle is across the street from the large beige building.</li>
+                            <li>C: The red vehicle is behind the large beige building.</li>
+                            <li>D: The red vehicle is located near the left-hand side of the large beige building.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> B</p>
+                        
+                        <hr class="qa-divider">
+                        
+                        <h3>Collaborative Decision - What to Collaborate</h3>
+                        <p><strong>Question:</strong> What specific scene context information should UAV3 share with other UAVs to improve traffic flow awareness?</p>
+                        <ul>
+                            <li>A: The presence and behavior of pedestrians at crosswalks in its view.</li>
+                            <li>B: Traffic light status and timing visible from all UAVs.</li>
+                            <li>C: Detailed positions of parked vehicles on the street from various angles.</li>
+                            <li>D: Any obstructions affecting the view of the street from other UAVs.</li>
+                        </ul>
+                        <p><strong>Answer:</strong> A</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+<!-- Quality Control Details Module -->
+<div class="static-content-section">
+    <h2 style="color: #667eea; margin-bottom: 20px; font-size: 1.5em; font-weight: 600;">📋 Quality Control Process</h2>
+    <div style="text-align: left;">
+        <div style="text-align: left; max-width: 100%;">
+            <h3 style="color: #333; margin-bottom: 20px; text-align: left;">Dataset Quality Control Measures</h3>
+            <p style="text-align: left; margin-bottom: 20px;">The quality control of the dataset involves three main measures:</p>
+            
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: #667eea; margin-bottom: 10px; text-align: left;">1. Standard Examination</h4>
+                <p style="text-align: left; line-height: 1.6;">It evaluates VQA pairs based on four criteria. Required Content checks if all essential information to address the question is included, with incomplete pairs flagged for revision. Format Consistency ensures uniform structure, wording, and presentation across pairs, identifying those deviating from standards for correction. Answer Validity verifies the accuracy and relevance of answer options, filtering out pairs with incorrect or irrelevant ones. Question Length assesses if questions are detailed enough to avoid ambiguity, ensuring comprehensibility. Each criterion is worth 1 point (maximum 4), and only pairs scoring 4 are retained in the final dataset.</p>
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: #667eea; margin-bottom: 10px; text-align: left;">2. Blind Filtering</h4>
+                <p style="text-align: left; line-height: 1.6;">This eliminates questions answerable by common sense without visual input using 3 MLLMs. Questions correctly answered by all MLLMs (relying on general knowledge) or incorrectly by all (flawed/ambiguous) are removed. Only those requiring genuine multi-view visual reasoning (some MLLMs answer correctly without visuals, others not) are retained.</p>
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: #667eea; margin-bottom: 10px; text-align: left;">3. Human Refinement</h4>
+                <p style="text-align: left; line-height: 1.6;">It addresses remaining issues in VQA pairs, including Ambiguous Questions (lacking clear definitions), Invalid Options (no correct answer, duplicates, irrelevant, or indistinct), and Incorrect Answers (wrong, missing, or multiple correct answers). Refinement examples are provided in Tab. 2.</p>
+            </div>
+
+            <h3 style="color:#333; margin: 30px 0 12px; text-align:left;">Table 2: Examples of human refinement for generated multi-UAV perception questions</h3>
+            <div style="overflow-x:auto;">
+                <table class="qc-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 14%;">Issues</th>
+                            <th style="width: 20%;">Refinement</th>
+                            <th>Examples</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="qc-badge">Incorrect answers</span></td>
+                            <td>Correct counting errors in target detection</td>
+                            <td>
+                                <strong>Object Counting:</strong> Based on the image analysis, how many targets (vehicles, pedestrians, bicycles) can be observed in UAV2’s perspective?<br>
+                                <em>Choices:</em><br>
+                                A. 21&nbsp;&nbsp; B. 20&nbsp;&nbsp; C. 18&nbsp;&nbsp; D. 19<br>
+                                <em>Original Answer:</em> A<br>
+                                <em>Corrected Answer:</em> <strong class="qc-correct">D</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="qc-badge">Ambiguous question</span></td>
+                            <td>Add specific object identifiers to eliminate ambiguity</td>
+                            <td>
+                                <strong>Object Grounding:</strong> Where is the gray car located relative to the <u>blue car which is adjacent to it</u> in this scene?<br>
+                                <em>Choices:</em><br>
+                                A. The gray car is ahead of the blue car in the same lane<br>
+                                B. The gray car is behind the blue car but in a different lane<br>
+                                C. The gray car is adjacent to the blue car in the neighboring lane<br>
+                                D. The gray car is directly in front of the blue car in a parallel lane<br>
+                                <em>Answer:</em> <strong>C</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="qc-badge">Invalid options</span></td>
+                            <td>Replace unmatchable options with valid alternatives</td>
+                            <td>
+                                <strong>Object Matching:</strong> Which object in another UAV’s view corresponds to the yellow vehicle in the left lane of the highway observed in UAV3’s view?<br>
+                                <em>Choices:</em><br>
+                                A. The yellow vehicle now seen merging onto a curved road in UAV2’s view<br>
+                                B. The yellow vehicle now stationary behind a row of parked cars in UAV4’s view<br>
+                                C. The yellow vehicle seen traveling in the middle lane, heading toward an underpass in UAV5’s view<br>
+                                D. <s>The yellow vehicle now seen parked near the trees on the right side of the road in UAV1’s view</s> <em class="qc-note">(No drone perspective can observe)</em><br>
+                                <em>Answer:</em> <strong>D</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="qc-badge">Invalid options</span></td>
+                            <td>Correct object type mismatches in options</td>
+                            <td>
+                                <strong>Object Matching:</strong> Which object in another UAV’s view corresponds to the dark gray sedan traveling in the middle lane in UAV3’s view?<br>
+                                <em>Choices:</em><br>
+                                A. The dark gray sedan now seen from a closer view in UAV2, traveling in the left lane<br>
+                                B. The <s>black SUV</s> <strong class="qc-correct">dark gray SUV</strong> now seen from above in UAV1, parked near the intersection<br>
+                                C. The dark gray sedan now seen from the side in UAV4, approaching a group of parked cars<br>
+                                D. The silver sedan now seen from the rear in UAV5, moving through a residential area<br>
+                                <em>Answer:</em> <strong>C</strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Evaluated Baselines and Models Module -->
+<div class="collapsible-section">
+    <h3 style="color: #2c3e50; margin-bottom: 25px; text-align: left; font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 10px 0;">📊 Evaluated Baselines and Models</h3>
+    <p style="text-align: left; line-height: 1.8; color: #555; font-size: 16px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 4px solid #667eea; margin-bottom: 25px;">The evaluated baselines and models, including both proprietary and open-source Multimodal Large Language Models (MLLMs) trained to handle multi-image inputs, are introduced as follows:</p>
+    <button class="collapsible-btn" onclick="toggleCollapseModels()">
+        📊 View Model List
+        <span class="arrow">▼</span>
+    </button>
+    <div class="collapsible-content" id="models-content" style="display: none;">
+    <div style="text-align: left;">
+        <div style="text-align: left; max-width: 100%;">
+            <ul style="text-align: left; padding-left: 20px;">
+                <li><strong>Random</strong>: A random baseline model, serving as the lowest performance benchmark for comparison.</li>
+                <li><strong>Human</strong>: A human expert performance baseline, representing the upper limit of human-level capability on the task.</li>
+                <li><strong>Step-1o-turbo</strong>: A reasoning-optimized turbo version model from Stepfun, demonstrating excellent performance across multiple tasks.</li>
+                <li><strong>GPT-4-series (Hurst et al. 2024)</strong>: OpenAI’s GPT-4 family, including GPT-4o and GPT-4V versions, with powerful multimodal understanding capabilities optimized for visual tasks.</li>
+                <li><strong>Doubao-seed-1-6-flash-250615 (Guo et al. 2025)</strong>: ByteDance’s Doubao series fast inference model, designed for efficient processing.</li>
+                <li><strong>Claude-Sonnet-4-20250514 (Anthropic 2025)</strong>: Anthropic’s Claude-4 Sonnet version, emphasizing safety and accuracy in responses.</li>
+                <li><strong>Gemini-series (Comanici et al. 2025)</strong>: Google’s Gemini family, including 2.0-Flash and 2.5-Pro versions, with multimodal processing capabilities excelling in complex reasoning tasks.</li>
+                <li><strong>Qwen-VL-series (Bai et al. 2023)</strong>: Alibaba’s Qwen vision-language model family, including Max-VL-latest and VL-Plus versions, with advanced multimodal understanding capabilities.</li>
+                <li><strong>Phi-series (Abdin et al. 2024a,b)</strong>: Microsoft’s Phi family, including Phi-3-vision-instruct and Phi-4-multimodal-instruct, which are lightweight vision instruction-following models for efficient deployment.</li>
+                <li><strong>Qwen2-VL-series (Wang et al. 2024b)</strong>: Qwen’s second-generation vision-language instruction models with 7B parameters.</li>
+                <li><strong>Qwen2.5-VL-series (Bai et al. 2025)</strong>: Qwen 2.5’s vision-language instruction models, ranging from compact 3B to large-scale 72B parameters, available in both instruction and base versions.</li>
+                <li><strong>InternVL-series (Zhu et al. 2025)</strong>: Shanghai AI Lab’s InternVL family, spanning versions 2.5 and 3.0 with parameter sizes from 8B to 78B, representing progressive improvements in multimodal understanding.</li>
+                <li><strong>Janus-Pro-series (Chen et al. 2025)</strong>: Janus-Pro family, focused on vision understanding tasks with 1B and 7B parameter versions.</li>
+                <li><strong>Ovis-series (Lu et al. 2024; Wang et al. 2025)</strong>: Ovis vision-language understanding models, including Ovis2 (16B, 34B) and Ovis-U1 (3B) versions with next-generation capabilities.</li>
+                <li><strong>Simple-VL-8B</strong>: A simplified architecture vision-language model for accessibility.</li>
+                <li><strong>Mimo-VL-series (Yue et al. 2025)</strong>: Mimo vision-language 7B models with different training approaches, including supervised fine-tuning (SFT) and reinforcement learning (RL).</li>
+                <li><strong>Kimi-VL-series (Team et al. 2025)</strong>: Moonshot AI’s Kimi vision-language 3B models, including standard instruction and thinking versions with chain-of-thought reasoning capabilities.</li>
+                <li><strong>Chameleon-7B (Lu et al. 2023)</strong>: Meta’s Chameleon multimodal model with adaptive capabilities.</li>
+                <li><strong>PaliGemma-3B (Beyer et al. 2024)</strong>: Google’s PaliGemma vision-language understanding model for efficient deployment.</li>
+                <li><strong>MiniCPM-V2.6 (Yao et al. 2024)</strong>: OpenBMB’s MiniCPM lightweight multimodal model for resource-constrained environments.</li>
+                <li><strong>LLaVA-NeXT-series (Liu et al. 2024)</strong>: LLaVA next-generation models with 7B and 13B parameters, available in both HuggingFace compatible and base versions for fine-tuning applications.</li>
+                <li><strong>Skywork-R1V3 (Peng et al. 2025)</strong>: Kunlun Tech’s Skywork model R1V3 reasoning version for complex problem solving.</li>
+                <li><strong>mPLUG-OWL3 (Ye et al. 2024)</strong>: Alibaba’s mPLUG-OWL series third-generation multimodal model.</li>
+                <li><strong>XComposer-VL-7B (Zhang et al. 2024b)</strong>: Shanghai AI Lab’s vision-language composition model.</li>
+            </ul>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- Hyperparameters Module -->
+<div class="static-content-section">
+    <h2 style="color: #667eea; margin-bottom: 20px; font-size: 1.5em; font-weight: 600;">⚙️ Hyperparameters for Training</h2>
+    <div style="text-align: left;">
+        <div style="text-align: left; max-width: 100%;">
+            <h3 style="color: #333; margin-bottom: 20px; text-align: left;">Hyperparameters for Training</h3>
+            <p style="text-align: left; line-height: 1.6;">In this section, we present all the hyperparameters we used to training the two kinds of models in Table 4 and Table 5. All the training processes were conducted using LLaMAFactory (Zheng et al. 2024). Regarding image resolution and the number of image tokens, we adhere to the original settings specified by each model.</p>
+            <div style="display: flex; justify-content: space-between;">
+                <div style="width: 48%;">
+                    <h4>Table 4: Hyperparameters for training Qwen2.5-VL (7B and 3B) model.</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Hyperparameter</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>LoRA Rank</td><td>8</td></tr>
+                            <tr><td>LoRA α</td><td>16</td></tr>
+                            <tr><td>LoRA Dropout</td><td>0.1</td></tr>
+                            <tr><td>LoRA Target</td><td>all</td></tr>
+                            <tr><td>GPU</td><td>4 × NVIDIA A800</td></tr>
+                            <tr><td>Batch Size</td><td>1</td></tr>
+                            <tr><td>Gradient Accumulation Steps</td><td>8</td></tr>
+                            <tr><td>Warmup Ratio</td><td>0.1</td></tr>
+                            <tr><td>Learning Rate</td><td>1e-4</td></tr>
+                            <tr><td>Learning Rate Scheduler</td><td>Cosine</td></tr>
+                            <tr><td>Unfreeze Vision Tower</td><td>True</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="width: 48%;">
+                    <h4>Table 5: Hyperparameters for training LLaVA-NeXT-13B model.</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Hyperparameter</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>LoRA Rank</td><td>8</td></tr>
+                            <tr><td>LoRA α</td><td>16</td></tr>
+                            <tr><td>LoRA Dropout</td><td>0.1</td></tr>
+                            <tr><td>LoRA Target</td><td>all</td></tr>
+                            <tr><td>GPU</td><td>4 × NVIDIA A800</td></tr>
+                            <tr><td>Batch Size</td><td>1</td></tr>
+                            <tr><td>Gradient Accumulation Steps</td><td>8</td></tr>
+                            <tr><td>Warmup Ratio</td><td>0.1</td></tr>
+                            <tr><td>Learning Rate</td><td>1e-5</td></tr>
+                            <tr><td>Learning Rate Scheduler</td><td>Cosine</td></tr>
+                            <tr><td>Unfreeze Vision Tower</td><td>False</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+
+<!-- Combined Question Generation and Prompt Design Group -->
+<div class="modules-container">
+<div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08)); border-radius: 12px; padding: 25px; margin-bottom: 30px; border: 1px solid rgba(102, 126, 234, 0.15); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
+    
+    <!-- Details of Question Generation Section -->
+    <div class="static-content-section">
+        <h3 style="color: #333; margin-bottom: 20px; text-align: left; font-size: 22px; font-weight: 600;">📋 Details of Question Generation</h3>
+        <p style="text-align: left; line-height: 1.8; color: #555; font-size: 16px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 4px solid #667eea; margin-bottom: 25px;">To produce high-quality VQA pairs, we employ three approaches, model-based, rule-based, and human-based generation, ensuring the validity of our dataset.</p>
+        
+        <div style="margin-bottom: 30px; background: linear-gradient(135deg, #fafbfc 0%, #f0f2f5 100%); padding: 25px; border-radius: 15px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); border: 1px solid #e1e8ed;">
+            <h4 style="color: #667eea; margin-bottom: 15px; text-align: left;">Model-based Generation</h4>
+            <p style="text-align: left; line-height: 1.6; margin-bottom: 20px;">This section uses LLMs to generate questions for task types requiring high diversity and contextual richness. Specifically, we apply four prompting strategies to guide the model in generating more relevant and coherent questions. The prompting examples and templates for model-based VQA generation are shown in E.4.</p>
+            
+            <div style="margin-bottom: 25px;">
+                <h5 style="color: #764ba2; margin-bottom: 10px; text-align: left;">• Task Decomposition</h5>
+                <p style="text-align: left; line-height: 1.8; color: #555; font-size: 16px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 4px solid #667eea; margin-bottom: 25px;">We begin by decomposing the overall VQA generation task, which encompasses all 14 collaborative perception tasks, into sub-tasks based on the independent complexity, requirements, and cognitive abilities of each task type. Instead of using a single VQA generation prompt for all tasks, we create specific functions for each task, call them sequentially, and merge their results into the final data structure. This approach enhances the model's success rates, simplifies debugging and retries, and improves the quality of generated questions by allowing the model to focus on each task individually.</p>
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+                <h5 style="color: #764ba2; margin-bottom: 10px; text-align: left;">• Role-playing</h5>
+                <p style="text-align: left; line-height: 1.8; color: #555; font-size: 16px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 4px solid #667eea; margin-bottom: 25px;">To improve task efficiency and reduce redundancy, we suggest incorporating global rules into the system role's content. This allows the user prompt to focus solely on the specific task at hand. For example, by specifying the system's role as an expert assistant and setting rules like "output must be in JSON," these constraints are applied globally, leaving the user prompt simpler and more concise. This approach not only separates the responsibilities of the system and user prompts but also reduces token consumption by eliminating repetitive instructions in every user request.</p>
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+                <h5 style="color: #764ba2; margin-bottom: 10px; text-align: left;">• CoT Prompting</h5>
+                <p style="text-align: left; line-height: 1.8; color: #555; font-size: 16px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 4px solid #667eea; margin-bottom: 25px;">For tasks requiring deep visual understanding, such as Scene Description, Scene Comparison, and Causal Assessment, we adopt a two-step CoT Prompting strategy that combines model pre-processing and generation. First, the model generates an intermediate understanding of the images, such as textual descriptions or captions for each UAV's perspective. In the second step, on the basis of these descriptions, the model generates the final question and answer pair that better fits the image content and question type. This approach simplifies the complex "image-to-question" task into two more manageable steps: "image-to-text" and "text-to-question." By generating captions or reasoning first, followed by question creation, this method improves both task manageability and question quality.</p>
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+                <h5 style="color: #764ba2; margin-bottom: 10px; text-align: left;">• Few-shot Learning</h5>
+                <p style="text-align: left; line-height: 1.8; color: #555; font-size: 16px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 4px solid #667eea; margin-bottom: 25px;">For tasks requiring complex reasoning, such as Object Grounding or Why to Collaborate, incorporating a few-shot learning approach in the prompt can significantly improve model performance. By providing a structured example in a few-shot format, the model learns to generate responses in the desired JSON format and question style. This approach enforces stricter format constraints and guides the model to focus on relevant details, ensuring more accurate and contextually appropriate questions.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Prompt Design Module -->
+    <div class="collapsible-section">
+        <button class="collapsible-btn" onclick="toggleCollapse8()" style="background: linear-gradient(135deg, #667eea, #764ba2); border: none; margin-top: 0;">
+            📝 Prompt Design
+            <span class="arrow">▼</span>
+        </button>
+    <div class="collapsible-content" id="examples-content8" style="text-align: left;">
+        <div style="text-align: left; max-width: 100%;">
+            <h3 style="color: #333; margin-bottom: 20px; text-align: left;">Prompt Design</h3>
+            <p style="text-align: left; line-height: 1.6;">Our prompt design follows a hierarchical structure with main instructions and specialized templates for different question types. The main instruction prompt Fig. 6 establishes the fundamental framework, defining the role as an expert teacher of multi-view perception and specifying the core requirements for multiple-choice question generation, including JSON output format and answer structure.</p>
+            
+            <pre>MAIN INSTRUCTIONS
+
+Role: You are an expert teacher of the ”Multi-view Perception” course, tasked with creating high-quality multiple-choice
+questions that test students’ understanding of multi-UAV collaboration.
+
+Goal: To generate multiple-choice questions about collaborative decision-making, object understanding, perception
+assessment, and scene understanding from multi-UAV visual content, adhering to specific requirements.
+
+Content Restrictions: Each question must be strictly restricted to and strongly related to the provided visual content
+and annotation data.
+
+Question Structure:
+
+• Each question needs the question itself and 4 choices (A, B, C, D)
+• There must be only 1 CORRECT answer and 3 wrong answers
+• Plausible but Incorrect: The incorrect choices should be reasonable but factually wrong
+• The wrong answers should not be too irrelevant
+• Answer Placement: The correct answer can be placed at any position among the choices (A, B, C, D)
+• Output Format: Must be valid JSON format</pre>
+            
+            <pre>Collaborative Decision
+
+When to Collaborate
+TASK EXPLANATION: This type of question requires the student to judge when collaboration between multiple
+UAVs is necessary based on the current scene analysis. The proper answer should identify situations where information
+is incomplete, targets are occluded, or environmental factors require multi-UAV coordination.
+
+TEMPLATE Question: ”When should [UAV ID] initiate collaboration with other UAVs based on the current scene
+analysis?”
+
+TEMPLATE Choices: ”When [specific collaboration trigger condition]”
+
+CORE PROMPT STRUCTURE: system prompt = ”You are an expert teacher of the ”Multi-view Perception” course.
+Your role is to create high-quality multiple-choice questions that test students’ understanding of when collaboration
+between multiple UAVs (up to 3) is necessary.”
+
+CRITICAL RULES:
+
+1. ALWAYS respond in English only
+2. Follow a structured thinking process: analyze annotation →determine collaboration need →formulate question →
+create options →verify correctness
+3. Questions must be based on annotation data
+4. Each question should have exactly 4 options (A, B, C, D) with only one correct answer
+5. Options should be plausible, distinct in meaning, and avoid minor rephrasing
+6. Output must be valid JSON format only
+
+THINKING PROCESS:
+
+1. Analyze the annotation to determine if collaboration is needed
+2. Formulate a clear question about the need for collaboration
+3. Create 4 distinct options where only one is correct
+4. Verify the question is unambiguous and answerable
+
+EXAMPLE OUTPUT:
+
+{
+"question_id": "sim3_when2col_UAV1_1001",
+"question_type": "4.1 When to Collaborate (UAV1)",
+"question": "When should UAV1 initiate collaboration with
+other UAVs based on the current scene analysis?",
+"options": {
+"A": "When target objects are partially occluded and
+require multi-viewpoint verification",
+"B": "When the scene is completely clear and all
+targets are visible",
+"C": "When there are no moving objects in the field
+of view",
+"D": "When the weather conditions are optimal for
+single UAV operation"
+},
+"correct_answer": "A",
+"image_description": "UAV1 shows a drone partially
+occluded by a tree, requiring collaboration for
+complete target verification"
+}</pre>
+            
+             <pre>Collaborative Decision
+
+What to Collaborate
+TASK EXPLANATION: This type of question requires the student to identify what specific object information should
+be shared between multiple UAVs. The proper answer should focus on specific object descriptions with intuitive location
+and context details, prioritizing drone detection and tracking as primary targets.
+
+TEMPLATE Question: ”What specific object information should [UAV ID] share with other UAVs about the [tar-
+get type] in the marked region?”
+
+TEMPLATE Choices: ”[Target type] [specific condition] in the [location] that needs [information type]”
+
+CORE PROMPT STRUCTURE: system prompt = ”You are an expert teacher of the ”Multi-view Perception” course.
+Your role is to create high-quality multiple-choice questions that test students’ understanding of what specific object
+information should be shared between multiple UAVs (up to 3).”
+
+CRITICAL RULES:
+
+1. ALWAYS respond in English only
+2. Follow a structured thinking process: analyze images →identify specific object information gaps →formulate
+question →create options →verify correctness
+3. Questions must be based on actual visual content or provided descriptions
+4. Each question should have exactly 4 options (A, B, C, D) with at least one correct answer
+5. Options should be plausible, distinct in meaning, and avoid minor rephrasing
+6. Output must be valid JSON format only
+7. Focus on specific object descriptions with intuitive location and context details
+8. Use intuitive image locations (upper-left corner, center, near landmarks, etc.) instead of numerical positions
+9. Prioritize drone detection and tracking as the primary target in all questions
+
+THINKING PROCESS:
+
+1. Analyze all images to identify specific object information gaps in marked regions across multiple UAV views
+2. Focus on drone-related object information as the primary target
+3. Identify the focus based on generation index
+4. Formulate a clear question about what specific object information to share from marked regions
+5. Create 4 distinct options, all related to specific object descriptions with intuitive location and context
+6. Verify the question is unambiguous and answerable
+
+EXAMPLE OUTPUT:
+
+{
+"question_id": "sim3_what2col_UAV1_1001",
+"question_type": "4.2 What to Collaborate (UAV1)",
+"question": "What specific object information should
+UAV1 share with other UAVs about the drone in the
+marked region?",
+"options": {
+"A": "Drone occluded by the tree in the upper-left
+corner of the image that needs position clarification",
+"B": "Drone flying at low altitude near the bottom
+edge that requires height verification",
+"C": "Drone moving rapidly from left to right across
+the center that needs trajectory prediction",
+"D": "Drone with similar color to background near the
+traffic light that requires contrast enhancement"
+},
+"correct_answer": "A",
+"image_description": "UAV1 shows a drone in the marked
+region at position (31.5%, 48.1%) with size 6.3%×3.6%
+that is occluded by a tree in the upper-left corner,
+requiring detailed position and movement information."
+}</pre>
+             
+             <pre>Collaborative Decision
+
+Which to Collaborate
+TASK EXPLANATION: This type of question requires the student to determine which UAV(s) should be the optimal
+collaboration partner in a multi-UAV setup. The proper answer should consider complementary visibility conditions and
+the relative strengths or specific needs of the current scenario.
+
+TEMPLATE Question: ”Which UAV should [UAV ID] collaborate with to [specific collaboration goal]?”
+
+TEMPLATE Choices: ”[UAV ID] which [specific advantage or capability]”
+
+CORE PROMPT STRUCTURE: system prompt = ”You are an expert teacher of the ”Multi-view Perception” course.
+Your role is to create high-quality multiple-choice questions that test students’ understanding of which UAV(s) should
+be the collaboration partner in a multi-UAV system (up to 3 UAVs).”
+
+CRITICAL RULES:
+
+1. ALWAYS respond in English only
+2. Follow a structured thinking process: analyze annotation →determine collaboration partner →formulate question
+→create options →verify correctness
+3. Questions must be based on annotation data
+4. Each question should have exactly 4 options (A, B, C, D) with only one correct answer
+5. Options should be plausible, distinct in meaning, and avoid minor rephrasing
+6. Output must be valid JSON format only
+
+THINKING PROCESS:
+
+1. Analyze the annotation to identify the collaboration partners
+2. Formulate a clear question about the collaboration partner
+3. Create 4 distinct options where only one is correct
+4. Verify the question is unambiguous and answerable
+
+EXAMPLE OUTPUT:
+
+{
+"question_id": "sim3_which2col_UAV1_1001",
+"question_type": "4.3 Which to Collaborate (UAV1)",
+"question": "Which UAV should UAV1 collaborate with to
+get a better viewing angle of the partially occluded
+target in the central area?",
+"options": {
+"A": "UAV2, which has a clear view of the central area
+from its positioning",
+"B": "UAV3, which is located at a similar angle with
+the same viewing obstruction",
+"C": "No collaboration needed as the target is fully
+visible",
+"D": "All UAVs simultaneously for maximum coverage"
+},
+"correct_answer": "A",
+"image_description": "UAV1 has partially occluded view
+of central area target, UAV2 has better positioning
+with clear view of target"
+}</pre>
+             
+              <pre>Collaborative Decision
+
+Why to Collaborate
+TASK EXPLANATION: This type of question requires the student to analyze the fundamental reasons and motiva-
+tions for collaboration between multiple UAVs. The proper answer should explain the specific benefits of collaboration
+decisions and evaluate the specific benefits brought by collaboration.
+
+TEMPLATE Question: ”Why is collaboration necessary between [UAV ID] and other UAVs in this scenario?”
+
+TEMPLATE Choices: ”To [specific collaboration benefit or reason]”
+
+CORE PROMPT STRUCTURE: system prompt = ”You are an expert teacher of the ”Multi-view Perception” course.
+Your role is to create high-quality multiple-choice questions that test students’ understanding of which UAV(s) should
+be the collaboration partner in a multi-UAV system (up to 3 UAVs).”
+
+CRITICAL RULES:
+
+1. ALWAYS respond in English only
+2. Follow a structured thinking process: analyze annotation →determine collaboration rationale →formulate question
+→create options →verify correctness
+3. Questions must be based on annotation data
+4. Each question should have exactly 4 options (A, B, C, D) with only one correct answer
+5. Options should be plausible, distinct in meaning, and avoid minor rephrasing
+6. Output must be valid JSON format only
+
+THINKING PROCESS:
+
+1. Analyze the annotation to identify the collaboration partner
+2. Formulate a clear question about the collaboration partner
+3. Create 4 distinct options where only one is correct
+4. Verify the question is unambiguous and answerable
+
+EXAMPLE OUTPUT:
+
+{
+"question_id": "sim3_why2col_UAV1_1001",
+"question_type": "4.4 Why to Collaborate (UAV1)",
+"question": "Why is collaboration necessary between
+UAV1 and other UAVs in this scenario?",
+"options": {
+"A": "To overcome visual occlusion caused by
+environmental obstacles and improve target detection
+accuracy",
+"B": "To reduce battery consumption by distributing
+the workload",
+"C": "To increase flight speed and cover more ground
+area",
+"D": "To test communication systems between UAVs"
+},
+"correct_answer": "A",
+"image_description": "UAV1 encounters visual occlusion
+of key targets due to environmental objects, requiring
+collaborative input from other UAVs to maintain
+complete situational awareness"
+}</pre>
+              
+              <pre>Object Understanding
+
+Object Recognition
+TASK EXPLANATION: This type of question requires the student to identify targets from UAV perspectives, focusing
+specifically on drone detection, vehicle recognition, and pedestrian identification. The proper answer should emphasize
+the UAV perspective and aerial view characteristics.
+
+TEMPLATE Question: ”From the UAV’s aerial perspective, what type of target is [specific characteristic] in this
+scene?”
+
+TEMPLATE Choices: ”[Specific target description] from [UAV perspective characteristic]”
+
+CORE PROMPT STRUCTURE: system prompt = ”You are an expert teacher of the ”UAV Multi-view Perception”
+course. Your role is to create high-quality multiple-choice questions that test students’ ability to identify targets from
+UAV perspectives, focusing specifically on drone detection, vehicle recognition, and pedestrian identification.”
+
+CRITICAL RULES:
+
+1. ALWAYS respond in English only
+2. Focus on UAV-specific target perception: drones, vehicles, pedestrians
+3. Questions must emphasize the UAV perspective and aerial view characteristics
+4. Each question should have exactly 4 options (A, B, C, D) with only one correct answer
+5. Options should be plausible, distinct in meaning, and avoid minor rephrasing
+6. Output must be valid JSON format only
+
+THINKING PROCESS:
+
+1. First, describe the key targets visible from the UAV perspective
+2. Focus on UAV-specific target types: drones, vehicles, pedestrians
+3. Formulate a clear, specific question about target recognition from aerial view
+4. Create 4 distinct options where only one is correct
+5. Verify the question emphasizes UAV perspective and target perception
+
+EXAMPLE OUTPUT:
+
+{
+"question_id": "sim3_OR_UAV1_1001",
+"question_type": "2.1 Object Recognition (UAV1)",
+"question": "From the UAV’s aerial perspective, what type of
+target is most prominently visible in this scene?",
+"options": {
+"A": "A white delivery van",
+"B": "A surveillance drone",
+"C": "A pedestrian crossing the road",
+"D": "A stationary traffic light"
+},
+"correct_answer": "A",
+"image_description": "The UAV captures a white delivery van
+from above, clearly visible on the multi-lane road with
+other vehicles nearby."
+}</pre>
+              
+              <pre>Object Understanding
+
+Object Counting
+TASK EXPLANATION: This type of question requires the student to count specific target types in scenes from UAV
+perspectives. The proper answer should be based on annotation data and ensure counting accuracy for drones, vehicles,
+pedestrians, and bicycles.
+
+TEMPLATE Question: ”From the UAV’s aerial perspective, how many [target type] can be detected in [UAV ID]’s
+field of view?”
+
+TEMPLATE Choices: ”[Number] [target type]”
+
+CORE PROMPT STRUCTURE:
+
+[Rule-Based] Generate UAV target counting questions based on
+all_samples.json annotation data.
+Now generates even if count=0.
+
+EXAMPLE OUTPUT:
+
+{
+"question_id": "sim3_OC_UAV1_1001",
+"question_type": "2.2 UAV Target Counting (UAV1)",
+"question": "From the UAV’s aerial perspective, how many
+targets (drones, vehicles, pedestrians) can be detected
+in UAV1’s field of view?",
+"options": {
+"A": "3",
+"B": "4",
+"C": "5",
+"D": "6"
+},
+"correct_answer": "A",
+"source": "Rule-Based from all_samples.json"
+}</pre>
+              
+              <pre>Object Understanding
+
+Object Grounding
+TASK EXPLANATION: This type of question requires the student to understand spatial positions of targets in scenes
+from UAV perspectives. The proper answer should analyze relative positional relationships between targets and evaluate
+spatial perception capabilities.
+
+TEMPLATE Question: ”Where is the [target type] located relative to [other objects] in [UAV ID]’s field of view?”
+
+TEMPLATE Choices: ”[Target type] [spatial relationship] [reference objects]”
+
+CORE PROMPT STRUCTURE: system prompt = ”You are an expert teacher of the ”UAV Multi-view Perception”
+course. Your role is to create high-quality multiple-choice questions that test students’ understanding of target spatial
+positioning from UAV aerial perspectives.”
+
+CRITICAL RULES:
+
+1. ALWAYS respond in English only
+2. Focus on UAV-specific target positioning: drones, vehicles, pedestrians from aerial view
+3. Questions must emphasize the UAV’s spatial perception capabilities
+4. Each question should have exactly 4 options (A, B, C, D) with only one correct answer
+5. Options should be plausible, distinct in meaning, and avoid minor rephrasing
+6. Output must be valid JSON format only
+
+THINKING PROCESS:
+
+1. First, describe the key targets and their spatial positions from the UAV perspective
+2. Focus on UAV-specific target types: drones, vehicles, pedestrians
+3. Formulate a clear, specific question about target grounding from aerial view
+4. Create 4 distinct options where only one is correct
+5. Verify the question emphasizes UAV spatial perception
+
+EXAMPLE OUTPUT:
+
+{
+"question_id": "sim3_OG_UAV1_1001",
+"question_type": "2.3 Object Grounding (UAV1)",
+"question": "Where is the drone located relative to other
+objects in UAV1’s field of view?",
+"options": {
+"A": "Above the intersection, hovering near the traffic
+light",
+"B": "Behind the building, partially obscured from view",
+"C": "On the ground near the sidewalk",
+"D": "Inside the vehicle on the road"
+},
+"correct_answer": "A",
+"image_description": "The drone is positioned above the
+intersection, hovering near the traffic light structure."
+}</pre>
+              
+              <pre>Object Understanding
+
+Object Matching
+TASK EXPLANATION: This type of question requires the student to match identical targets across multi-UAV per-
+spectives, analyzing the impact of viewpoint changes on target appearance. The proper answer should focus on appear-
+ance differences caused by viewpoint changes rather than simple recognition.
+
+TEMPLATE Question: ”The [target description] seen from [perspective1] in [UAV1]’s view appears as what in
+[UAV2]’s perspective?”
+
+TEMPLATE Choices: ”[Target description] seen from [perspective2] with [specific changes]”
+
+CORE PROMPT STRUCTURE: system prompt = ”You are an expert teacher of the ”UAV Multi-view Perception”
+course. Your role is to create high-quality multiple-choice questions that test students’ ability to match targets across
+multiple UAV perspectives, focusing on drone detection, vehicle tracking, and pedestrian identification.”
+
+CRITICAL RULES:
+
+1. ALWAYS respond in English only
+2. Focus on UAV-specific target matching: drones, vehicles, pedestrians across aerial views
+3. Questions must emphasize the UAV’s multi-perspective target tracking capabilities
+4. Each question should have exactly 4 options (A, B, C, D) with only one correct answer
+5. Options should be plausible, distinct in meaning, and avoid minor rephrasing
+6. Output must be valid JSON format only
+
+A simple question like ”What is the white truck in image 1?” with the answer ”The white truck in image 2” is USELESS.
+Avoid this.
+Instead, follow this reasoning process to create a high-quality question:
+
+THINKING PROCESS:
+
+1. Identify a Candidate Target: In the first image (uav id), find a distinct target (drone, vehicle, pedestrian) that is also
+clearly visible in one of the subsequent images (other UAVs). Let’s call this the ”target object”.
+2. Analyze the Change: Critically compare the target object’s appearance and context between the UAV views. Focus
+on what has CHANGED. Examples of changes include:
+
+• Perspective: ”The vehicle seen from the side” in [uav id] is now ”seen from the rear” in another UAV view.
+• Relative Position: ”The car behind the bus” in [uav id] is now ”the car beside a red sedan” in another UAV view.
+• Action/State: ”The pedestrian walking towards the crosswalk” in [uav id] is now ”the pedestrian waiting at the
+crosswalk” in another UAV view.
+• Occlusion: ”The partially occluded blue car” in [uav id] is now ”fully visible” in another UAV view.
+
+3. Formulate Question: Ask about the target object’s appearance or context in the first image, with the answer being
+how it appears in the second image.
+4. Create Options: Make all 4 options plausible descriptions of the target object in the second image, with only one
+being correct.
+5. Verify: Ensure the question tests understanding of perspective changes, not just object recognition.
+
+EXAMPLE OUTPUT:
+
+{
+"question_id": "sim3_OM_UAV1_1001",
+"question_type": "2.4 Object Matching (UAV1)",
+"question": "The red car seen from the side in UAV1’s view
+appears as what in UAV2’s perspective?",
+"options": {
+"A": "A red car seen from the rear with visible
+taillights",
+"B": "A blue car seen from the front",
+"C": "A red car seen from above with roof visible",
+"D": "A red car seen from the opposite side"
+},
+"correct_answer": "A",
+"image_description": "UAV1 shows a red car from the side,
+while UAV2 shows the same car from the rear with visible
+taillights."
+}</pre>
+              
+              <pre>Perception Assessment
+
+Quality Assessment
+TASK EXPLANATION: This type of question requires the student to assess image quality for perception tasks in
+multi-UAV views, with focus on drone, vehicle, pedestrian, and bicycle detection. The proper answer should evaluate
+factors such as clarity, noise, and distortion that affect target detection.
+
+TEMPLATE Question: ”How would you rate the [quality factor] for detecting [target types] in this scene?”
+
+TEMPLATE Choices: ”[Quality level] with [specific characteristics]”
+
+CORE PROMPT STRUCTURE: system prompt = ”You are an expert teacher of the ”Multi-view Perception” course.
+Your role is to create high-quality multiple-choice questions that test students’ ability to assess image quality for per-
+ception tasks in multi-UAV views, with focus on drone, vehicle, pedestrian, and bicycle detection.”
+
+CRITICAL RULES:
+
+1. ALWAYS respond in English only
+2. Follow a structured thinking process: analyze →identify quality factors →formulate question →create options →
+verify correctness
+3. Questions must be based on actual visual content or provided description
+4. Each question should have exactly 4 options (A, B, C, D) with only one correct answer
+5. Options should be plausible, distinct in meaning, and avoid minor rephrasing
+6. Output must be valid JSON format only
+7. Focus on quality factors that affect detection of drones, vehicles, pedestrians, and bicycles
+
+THINKING PROCESS:
+
+1. First, describe the quality factors (clarity, noise, color balance, etc.) in the image or description
+2. Identify the focus based on generation index
+3. Formulate a clear, specific question about image quality for target detection
+4. Create 4 distinct options where only one is correct
+5. Verify the question is unambiguous and answerable
+
+EXAMPLE OUTPUT:
+
+{
+"question_id": "sim3_QA_UAV1_1001",
+"question_type": "3.1 Quality Assessment (UAV1)",
+"question": "How would you rate the image clarity for
+detecting drones and vehicles in this scene?",
+"options": {
+"A": "Excellent with sharp details on all targets",
+"B": "Good with minor blur on some objects",
+"C": "Fair with noticeable distortion affecting
+detection",
+"D": "Poor with significant artifacts obscuring targets"
+},
+"correct_answer": "A",
+"image_description": "The image shows excellent clarity
+with sharp details on drones, vehicles, pedestrians,
+and bicycles."
+}</pre>
+              
+              <pre>Perception Assessment
+
+Usability Assessment
+TASK EXPLANATION: This type of question requires the student to assess image usability for perception tasks in
+multi-UAV views, with focus on drone, vehicle, pedestrian, and bicycle detection and tracking. The proper answer
+should evaluate whether images are suitable for specific tasks and consider matching between task requirements and
+image characteristics.
+
+TEMPLATE Question: ”Is the image captured by [UAV ID] usable for [specific task]?”
+
+TEMPLATE Choices: ”[Usability level] for [specific reason]”
+
+CORE PROMPT STRUCTURE: system prompt = ”You are an expert teacher of the ”Multi-view Perception” course.
+Your role is to create high-quality multiple-choice questions that test students’ ability to assess image usability for
+perception tasks in multi-UAV views, with focus on drone, vehicle, pedestrian, and bicycle detection and tracking.”
+
+CRITICAL RULES:
+
+1. ALWAYS respond in English only
+2. Follow a structured thinking process: analyze →identify usability factors →formulate question →create options
+→verify correctness
+3. Questions must be based on actual visual content or provided description
+4. Each question should have exactly 4 options (A, B, C, D) with only one correct answer
+5. Options should be plausible, distinct in meaning, and avoid minor rephrasing
+6. Output must be valid JSON format only
+7. Focus on usability factors that affect detection and tracking of drones, vehicles, pedestrians, and bicycles
+
+THINKING PROCESS:
+
+1. First, describe the usability factors (suitability for target detection, tracking, etc.) in the image or description
+2. Identify the focus based on generation index
+3. Formulate a clear, specific question about image usability for target tasks
+4. Create 4 distinct options where only one is correct
+5. Verify the question is unambiguous and answerable
+
+EXAMPLE OUTPUT:
+
+{
+"question_id": "sim3_UA_UAV1_1001",
+"question_type": "3.2 Usability Assessment (UAV1)",
+"question": "Is the image captured by UAV1 usable for
+detecting drones, vehicles, pedestrians, and bicycles?",
+"options": {
+"A": "Yes, highly usable",
+"B": "Yes, usable",
+"C": "Yes, partially usable",
+"D": "No, not usable"
+},
+"correct_answer": "A",
+"source": "Rule-Based from JSON"
+}</pre>
+              
+              <pre>Perception Assessment
+
+Causal Assessment
+TASK EXPLANATION: This type of question requires the student to analyze causes of perception quality issues in
+multi-UAV views, with focus on drone, vehicle, pedestrian, and bicycle detection. The proper answer should identify
+key factors affecting perception effectiveness and understand impact of causal relationships on perception quality.
+
+TEMPLATE Question: ”What is the primary cause of [perception issue] in [UAV ID]’s image?”
+
+TEMPLATE Choices: ”[Specific cause] [affecting factor]”
+
+CORE PROMPT STRUCTURE: system prompt = ”You are an expert teacher of the ”Multi-view Perception” course.
+Your role is to create high-quality multiple-choice questions that test students’ ability to analyze causes of perception
+quality issues in multi-UAV views, with focus on drone, vehicle, pedestrian, and bicycle detection.”
+
+CRITICAL RULES:
+
+1. ALWAYS respond in English only
+2. Follow a structured thinking process: analyze image →identify potential causes →formulate question →create
+options →verify correctness
+3. Questions must be based on actual visual content or provided description
+4. Each question should have exactly 4 options (A, B, C, D) with only one correct answer
+5. Options should be plausible, distinct in meaning, and avoid minor rephrasing
+6. Output must be valid JSON format only
+7. Focus on causes that affect detection of drones, vehicles, pedestrians, and bicycles
+
+THINKING PROCESS:
+
+1. First, describe the potential causes of perception issues (occlusion, lighting, resolution, etc.) in the image or description
+2. Identify the primary cause based on generation index
+3. Formulate a clear, specific question about the cause of perception issues for target detection
+4. Create 4 distinct options where only one is correct
+5. Verify the question is unambiguous and answerable
+
+EXAMPLE OUTPUT:
+
+{
+"question_id": "sim3_CA_UAV1_1001",
+"question_type": "3.3 Causal Assessment (UAV1)",
+"question": "What is the primary cause of reduced visibility for drones and vehicles in this scene?",
+"options": {
+"A": "Heavy fog obscuring distant objects",
+"B": "Bright sunlight causing glare on metallic surfaces",
+"C": "Low resolution making small objects indistinct",
+"D": "Camera angle limiting field of view"
+},
+"correct_answer": "A",
+"image_description": "The image shows heavy fog reducing visibility for drones, vehicles, pedestrians, and bicycles."
+}</pre>
+              
+              <pre>Perception Assessment
+
+Improvement Assessment
+TASK EXPLANATION: This type of question requires the student to suggest improvements for perception quality in
+multi-UAV views, with focus on drone, vehicle, pedestrian, and bicycle detection. The proper answer should propose
+practical methods to enhance perception effectiveness and understand how to mitigate identified issues.
+
+TEMPLATE Question: ”How can the perception quality for detecting [target types] be improved in [UAV ID]’s
+image?”
+
+TEMPLATE Choices: ”By [specific improvement method] to [benefit]”
+
+CORE PROMPT STRUCTURE: system prompt = ”You are an expert teacher of the ”Multi-view Perception” course.
+Your role is to create high-quality multiple-choice questions that test students’ ability to suggest improvements for
+perception quality in multi-UAV views, with focus on drone, vehicle, pedestrian, and bicycle detection.”
+
+CRITICAL RULES:
+
+1. ALWAYS respond in English only
+2. Follow a structured thinking process: analyze issues →identify improvement methods →formulate question →create
+options →verify correctness
+3. Questions must be based on actual visual content or provided description
+4. Each question should have exactly 4 options (A, B, C, D) with only one correct answer
+5. Options should be plausible, distinct in meaning, and avoid minor rephrasing
+6. Output must be valid JSON format only
+7. Focus on improvement methods that enhance detection of drones, vehicles, pedestrians, and bicycles
+
+THINKING PROCESS:
+
+1. First, identify the perception issues (poor lighting, occlusion, low resolution, etc.) in the image or description
+2. Suggest practical improvement methods
+3. Formulate a clear, specific question about improving perception for target detection
+4. Create 4 distinct options where only one is correct
+5. Verify the question is unambiguous and answerable
+
+EXAMPLE OUTPUT:
+
+{
+"question_id": "sim3_IA_UAV1_1001",
+"question_type": "3.4 Improvement Assessment (UAV1)",
+"question": "How can the perception quality for detecting drones and vehicles be improved in this scene?",
+"options": {
+"A": "By adjusting the UAV altitude to reduce occlusion",
+"B": "By changing the color filter to enhance contrast",
+"C": "By increasing the frame rate for better motion capture",
+"D": "By adding more UAVs for multi-angle views"
+},
+"correct_answer": "A",
+"image_description": "The image shows occlusion issues that can be improved by adjusting UAV altitude."
+}</pre>
+              
+              <pre>Scene Understanding
+
+Scene Description
+TASK EXPLANATION: This type of question requires the student to describe overall scenes from multi-UAV perspec-
+tives, integrating information from multiple views. The proper answer should provide comprehensive scene descriptions
+that capture key elements and dynamics.
+
+TEMPLATE Question: ”What is the overall scene description integrating views from all UAVs?”
+
+TEMPLATE Choices: ”[Comprehensive scene description]”
+
+CORE PROMPT STRUCTURE: system prompt = ”You are an expert teacher of the ”UAV Multi-view Perception”
+course. Your role is to create high-quality multiple-choice questions that test students’ ability to describe overall scenes
+from multi-UAV perspectives, integrating information from multiple views.”
+
+CRITICAL RULES:
+
+1. ALWAYS respond in English only
+2. Focus on integrating multi-UAV views for comprehensive scene understanding
+3. Questions must emphasize key scene elements: environment, targets, dynamics
+4. Each question should have exactly 4 options (A, B, C, D) with only one correct answer
+5. Options should be plausible, distinct in meaning, and avoid minor rephrasing
+6. Output must be valid JSON format only
+
+THINKING PROCESS:
+
+1. First, integrate descriptions from all UAV views
+2. Formulate a clear question about overall scene description
+3. Create 4 distinct options where only one is correct
+4. Verify the question captures multi-view integration
+
+EXAMPLE OUTPUT:
+
+{
+"question_id": "sim3_SD_1001",
+"question_type": "4. Scene Description",
+"question": "What is the overall scene description integrating views from all UAVs?",
+"options": {
+"A": "Busy urban intersection with multiple vehicles, pedestrians, and a hovering drone",
+"B": "Quiet rural road with few vehicles and no pedestrians",
+"C": "Industrial area with heavy machinery and workers",
+"D": "Park setting with people walking and bicycles"
+},
+"correct_answer": "A",
+"image_description": "Integrated view shows a busy urban intersection with vehicles, pedestrians, and a drone."
+}</pre>
+      </div>
+  </div>
+     </div>
+</div>
+</div>
+
+<div class="modules-container">
+   <!-- Results on AirCopBench Module -->
+<div class="static-content-section">
+    <h2 style="color: #667eea; margin-bottom: 20px; font-size: 1.5em; font-weight: 600;">📊 Results on AirCopBench</h2>
+    <div style="text-align: left;">
+        <div style="text-align: left; max-width: 100%;">
+            <h3 style="color: #333; margin-bottom: 20px; text-align: left;">Results on AirCopBench</h3>
+            <p style="text-align: left; line-height: 1.6;">Table 3: Results on AirCopBench for existing various MLLMs on 14 task types across 4 evaluation dimensions. The best-performing model in each category is highlighted in bold, while the second-best is underlined.</p>
+            <img src="example/90.png" alt="Table 3: Results on AirCopBench" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="modules-container">
+<!-- Label Studio UI Examples Module -->
+<div class="static-content-section">
+    <h2 style="color: #667eea; margin-bottom: 20px; font-size: 1.5em; font-weight: 600;">📊 Examples of Label Studio UI</h2>
+    <div style="text-align: left;">
+        <div style="text-align: left; max-width: 100%;">
+            <h3 style="color: #333; margin-bottom: 20px; text-align: left;">Examples of Label Studio UI</h3>
+            <p style="text-align: left; line-height: 1.6;">Examples of the user interface of Label Studio. This example illustrates the human annotation of the event-level labeling for a group of images.</p>
+            
+            <img src="example/89.png" alt="Label Studio Example 89" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+            <img src="example/84.png" alt="Label Studio Example 84" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+            <img src="example/85.png" alt="Label Studio Example 85" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+            <img src="example/86.png" alt="Label Studio Example 86" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+            <img src="example/87.png" alt="Label Studio Example 87" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+            <img src="example/88.png" alt="Label Studio Example 88" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+         function toggleCollapse() {
+             const content = document.getElementById('examples-content');
+             const button = event.target.closest('button');
+             const arrow = button.querySelector('.arrow');
+             
+             if (content.style.display === 'none' || content.style.display === '') {
+                 content.style.display = 'block';
+                 arrow.classList.add('open');
+                 button.setAttribute('aria-expanded', 'true');
+             } else {
+                 content.style.display = 'none';
+                 arrow.classList.remove('open');
+                 button.setAttribute('aria-expanded', 'false');
+             }
+         }
+         
+         function toggleCollapse2() {
+             const content = document.getElementById('examples-content2');
+             const button = event.target.closest('button');
+             const arrow = button.querySelector('.arrow');
+             
+             if (content.style.display === 'none' || content.style.display === '') {
+                 content.style.display = 'block';
+                 arrow.classList.add('open');
+                 button.setAttribute('aria-expanded', 'true');
+             } else {
+                 content.style.display = 'none';
+                 arrow.classList.remove('open');
+                 button.setAttribute('aria-expanded', 'false');
+             }
+         }
+         
+         function toggleCollapse3() {
+             const content = document.getElementById('examples-content3');
+             const button = event.target.closest('button');
+             const arrow = button.querySelector('.arrow');
+             
+             if (content.style.display === 'none' || content.style.display === '') {
+                 content.style.display = 'block';
+                 arrow.classList.add('open');
+                 button.setAttribute('aria-expanded', 'true');
+             } else {
+                 content.style.display = 'none';
+                 arrow.classList.remove('open');
+                 button.setAttribute('aria-expanded', 'false');
+             }
+         }
+         
+         function toggleCollapse4() {
+             const content = document.getElementById('examples-content4');
+             const button = event.target.closest('button');
+             const arrow = button.querySelector('.arrow');
+             
+             if (content.style.display === 'none' || content.style.display === '') {
+                 content.style.display = 'block';
+                 arrow.classList.add('open');
+                 button.setAttribute('aria-expanded', 'true');
+             } else {
+                 content.style.display = 'none';
+                 arrow.classList.remove('open');
+                 button.setAttribute('aria-expanded', 'false');
+             }
+         }
+         
+         function toggleCollapseModels() {
+             const content = document.getElementById('models-content');
+             const button = event.target.closest('button');
+             const arrow = button.querySelector('.arrow');
+             
+             if (content.style.display === 'none' || content.style.display === '') {
+                 content.style.display = 'block';
+                 arrow.classList.add('open');
+                 button.setAttribute('aria-expanded', 'true');
+             } else {
+                 content.style.display = 'none';
+                 arrow.classList.remove('open');
+                 button.setAttribute('aria-expanded', 'false');
+             }
+         }
+         
+         function toggleCollapse8() {
+             const content = document.getElementById('examples-content8');
+             const button = event.target.closest('button');
+             const arrow = button.querySelector('.arrow');
+             
+             if (content.style.display === 'none' || content.style.display === '') {
+                 content.style.display = 'block';
+                 arrow.classList.add('open');
+                 button.setAttribute('aria-expanded', 'true');
+             } else {
+                 content.style.display = 'none';
+                 arrow.classList.remove('open');
+                 button.setAttribute('aria-expanded', 'false');
+             }
+         }
+
+         // Modal JavaScript 
+         document.addEventListener("DOMContentLoaded", function() { 
+           var modal = document.getElementById("myModal"); 
+           var modalImg = document.getElementById("img01"); 
+           var images = document.querySelectorAll('img'); 
+           images.forEach(function(img) { 
+             img.onclick = function(){ 
+               modal.style.display = "block"; 
+               modalImg.src = this.src; 
+             } 
+           }); 
+           var span = document.getElementsByClassName("close")[0]; 
+           if (span) { 
+             span.onclick = function() {  
+               modal.style.display = "none"; 
+             } 
+           } 
+
+           // Enhance all pre blocks with a copy button
+           document.querySelectorAll('pre').forEach(function(block){
+             // Avoid duplicate buttons
+             if (!block.querySelector('.copy-btn')) {
+               var btn = document.createElement('button');
+               btn.className = 'copy-btn';
+               btn.type = 'button';
+               btn.setAttribute('aria-label', 'Copy code');
+               btn.textContent = 'Copy';
+               btn.addEventListener('click', function(){
+                 var text = block.innerText || block.textContent || '';
+                 navigator.clipboard.writeText(text).then(function(){
+                   btn.textContent = 'Copied';
+                   btn.classList.add('copied');
+                   setTimeout(function(){
+                     btn.textContent = 'Copy';
+                     btn.classList.remove('copied');
+                   }, 1200);
+                 }).catch(function(){
+                   // Fallback
+                   var range = document.createRange();
+                   range.selectNodeContents(block);
+                   var sel = window.getSelection();
+                   sel.removeAllRanges();
+                   sel.addRange(range);
+                   try { document.execCommand('copy'); } catch(e){}
+                   sel.removeAllRanges();
+                   btn.textContent = 'Copied';
+                   btn.classList.add('copied');
+                   setTimeout(function(){
+                     btn.textContent = 'Copy';
+                     btn.classList.remove('copied');
+                   }, 1200);
+                 });
+               });
+               block.appendChild(btn);
+             }
+           });
+         }); 
+     </script> 
+     <div id="myModal" class="modal"> 
+       <span class="close">&times;</span> 
+       <img class="modal-content" id="img01"> 
+     </div> 
+    </div>
 </body>
 </html>
