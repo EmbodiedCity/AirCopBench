@@ -43,6 +43,36 @@
         </div>
         <p class="intro-paragraph">The benchmark is designed to evaluate whether vision-language models (VLMs) can process multi-UAV collaborative visual data for question answering, covering perception, reasoning, and decision-making in complex scenarios.</p>
         
+        <section class="figure-showcase">
+            <h3 class="figure-showcase-title">AirCopBench at a Glance</h3>
+            <div class="figure-grid">
+                <figure class="figure-card">
+                    <img src="asset/overview.png" alt="Overview of AirCopBench" class="figure-embed">
+                    <figcaption><strong>Figure Overview.</strong> Illustration of multi-drone collaborative perception under diverse degradation alongside performance of six representative MLLMs versus human and random baselines.</figcaption>
+                </figure>
+                <figure class="figure-card">
+                    <img src="asset/task.png" alt="AirCopBench task taxonomy" class="figure-embed">
+                    <figcaption><strong>Task Taxonomy.</strong> Four evaluation dimensions with fourteen task types covering scene understanding, object understanding, perception assessment, and collaborative decision making.</figcaption>
+                </figure>
+                <figure class="figure-card">
+                    <img src="asset/pipeline.png" alt="AirCopBench generation pipeline" class="figure-embed">
+                    <figcaption><strong>Dataset Pipeline.</strong> Four-stage creation process including data collection, annotation, question generation, and quality control to ensure reliable benchmarks.</figcaption>
+                </figure>
+                <figure class="figure-card">
+                    <img src="asset/statistics.png" alt="AirCopBench statistics" class="figure-embed">
+                    <figcaption><strong>Statistical Overview.</strong> Distributions of VQA pairs across task types, data sources, UAV group counts, and perception degradation categories.</figcaption>
+                </figure>
+                <figure class="figure-card">
+                    <img src="asset/correlation.png" alt="Task correlation matrix" class="figure-embed">
+                    <figcaption><strong>Task Correlation.</strong> Correlation coefficients across all tasks highlight similarities in cognitive requirements among MLLMs.</figcaption>
+                </figure>
+                <figure class="figure-card">
+                    <img src="asset/error.png" alt="Common MLLM reasoning errors" class="figure-embed">
+                    <figcaption><strong>Common Errors.</strong> Typical reasoning failures observed in aerial collaborative perception scenarios for current MLLMs.</figcaption>
+                </figure>
+            </div>
+        </section>
+
         <div class="modules-container">
         <div class="dataset-examples-group">
             <p>To better illustrate the proposed dataset, we present VQA examples along with corresponding multi-view images captured by multiple UAVs in the real world (Liu et al. 2023), the EmbodiedCity simulator (Gao et al. 2024), the Coperception-UAV dataset (Hu et al. 2022), and the AeroCollab3D dataset (Tian et al. 2024), covering all 14 task types across 4 dimensions. The dataset examples from the 4 data sources are shown below respectively. </p>
