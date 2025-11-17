@@ -126,6 +126,77 @@ p {
         .intro-paragraph {
             margin-bottom: 30px;
         }
+        
+        /* Figure showcase styles */
+        .figure-showcase {
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .figure-showcase-title {
+            text-align: center;
+            color: #2c3e50;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .figure-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+        
+        .figure-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .figure-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+        
+        .figure-embed {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            margin-bottom: 15px;
+            object-fit: contain;
+            background: white;
+        }
+        
+        .figure-card figcaption {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.5;
+            text-align: left;
+            padding: 0 5px;
+        }
+        
+        .figure-card figcaption strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
         .modules-container {
             margin-top: 20px;
         }
@@ -378,6 +449,11 @@ p {
                  padding: 8px 16px;
                  font-size: 0.9em;
              }
+             
+             .figure-grid {
+                 grid-template-columns: 1fr;
+                 gap: 20px;
+             }
         }
         
         @media (max-width: 768px) {
@@ -445,6 +521,20 @@ p {
              .image-container {
                  max-width: 90%;
                  margin: 10px;
+             }
+             
+             .figure-grid {
+                 grid-template-columns: 1fr;
+                 gap: 15px;
+             }
+             
+             .figure-card {
+                 padding: 15px;
+             }
+             
+             .figure-showcase {
+                 padding: 20px;
+                 margin: 30px 0;
              }
              
              .collapsible-btn {
@@ -608,6 +698,21 @@ p {
              
              .image-container {
                  max-width: 100%;
+             }
+             
+             .figure-grid {
+                 grid-template-columns: 1fr;
+                 gap: 15px;
+             }
+             
+             .figure-showcase {
+                 padding: 15px;
+                 margin: 20px 0;
+             }
+             
+             .figure-showcase-title {
+                 font-size: 1.4em;
+                 margin-bottom: 20px;
              }
              
              .drone-image {
