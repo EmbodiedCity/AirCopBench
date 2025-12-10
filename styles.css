@@ -896,3 +896,9 @@ p {
             padding: 8px 16px;
             font-size: 0.9em;
         }
+
+        .authors-block p {
+            text-align: center;
+            text-indent: 0;
+            font-size: 0.95em;
+        }
